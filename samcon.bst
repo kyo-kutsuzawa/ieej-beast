@@ -182,39 +182,69 @@ FUNCTION {emphasize}
 
 INTEGERS { nameptr namesleft numnames }
 
+% 著者名一覧を出力する
 FUNCTION {format.names}
 { 's :=
   #1 'nameptr :=
-  s num.names$ 'numnames :=
-  numnames 'namesleft :=
-    { namesleft #0 > }
-    { s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
-      nameptr #1 >
-	{ namesleft #1 >
-	    { ", " * t * }
-	    { numnames #2 >
-		{ "," * }
-		'skip$
+  s num.names$ 'numnames :=  % % 著者数を namesleft に代入する。
+  numnames 'namesleft :=  % 著者数を namesleft に代入する。こっちはどんどんデクリメントされていく。
+
+  % 著者数だけループする。
+  {
+    namesleft #0 >
+  }
+  {
+    % nameptr 番目の著者名を t に代入する。
+    s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
+
+    % 2人目以降なら ", " を足したりする。
+    nameptr #1 >
+	  {
+      % 最後から2人目までは ", " を足す。
+      namesleft #1 >
+	    {
+        ", " * t *
+      }
+	    {
+        % 著者数が3人以上ならカンマ区切りする。
+        numnames #2 >
+		    {
+          "," *
+        }
+		    'skip$
 	      if$
+
+        % 最後著者のところ？ "others" なら "et~al." にして，そうじゃないなら "and" を付ける。
 	      t "others" =
-		{ " et~al." * }
-		{ " and " * t * }
+        {
+          " et~al." *
+        }
+        {
+          " and " * t *
+        }
 	      if$
 	    }
-	  if$
-	}
-	't
-      if$
-      nameptr #1 + 'nameptr :=
-      namesleft #1 - 'namesleft :=
-    }
+  	  if$
+	  }
+  	't
+    if$
+
+    nameptr #1 + 'nameptr :=  % 著者番号 nameptr をインクリメントする。
+    namesleft #1 - 'namesleft :=  % 残り所者数 namesleft をデクリメントする。
+  }
   while$
 }
 
 FUNCTION {format.authors}
-{ author empty$
-    { "" }
-    { author format.names }
+{
+  % 著者が0人じゃなければ，著者リストの最後に ":" を足す。
+  author empty$
+  {
+    ""
+  }
+  {
+    author format.names
+  }
   if$
 }
 
@@ -231,9 +261,15 @@ FUNCTION {format.editors}
 }
 
 FUNCTION {format.title}
-{ title empty$
-    { "" }
-    { title "t" change.case$ }
+{
+  % タイトルが空じゃなければ，題名をすべて小文字にする。
+  title empty$
+  {
+    ""
+  }
+  {
+    title "t" change.case$
+  }
   if$
 }
 
