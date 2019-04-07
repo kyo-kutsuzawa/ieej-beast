@@ -46,44 +46,72 @@ FUNCTION {init.state.consts}
 
 STRINGS { s t }
 
+% 
 FUNCTION {output.nonnull}
-{ 's :=
+{
+  's :=
+
+  % output.state = mid.sentence なら ", " を出力する。
+  % output.state = after.block なら ".\n\newblock " を出力する。
+  % output.state = before.all なら ？？？ を出力する。
+  % どれでもなければ ". " を出力する。
+
   output.state mid.sentence =
-    { ", " * write$ }
-    { output.state after.block =
-	{ add.period$ write$
-	  newline$
-	  "\newblock " write$
-	}
-	{ output.state before.all =
-	    'write$
-	    { add.period$ " " * write$ }
-	  if$
-	}
-      if$
-      mid.sentence 'output.state :=
+  {
+    ", " * write$
+  }
+  {
+    output.state after.block =
+	  {
+      %add.period$ write$
+      write$
+	    newline$
+	    "\newblock " write$
     }
+	  {
+      output.state before.all =
+	    'write$
+	    {
+        add.period$ " " * write$
+      }
+	    if$
+  	}
+    if$
+
+    % output.state を mid.sentence に更新する。
+    mid.sentence 'output.state :=
+  }
   if$
+
   s
 }
 
 FUNCTION {output}
-{ duplicate$ empty$
-    'pop$
-    'output.nonnull
+{
+  duplicate$ empty$
+  'pop$
+  'output.nonnull
   if$
 }
 
+% S1 S2 output.check
+% S1 が空なら「S2 の項目が空ですよ」的な警告を出す。
 FUNCTION {output.check}
-{ 't :=
+{
+  't :=
+
+  % 直前の文字列が空なら
   duplicate$ empty$
-    { pop$ "empty " t * " in " * cite$ * warning$ }
-    'output.nonnull
+  {
+    pop$ "empty " t * " in " * cite$ * warning$
+  }
+  'output.nonnull
   if$
 }
 
 FUNCTION {output.bibitem}
-{ newline$
+{
+  newline$
   "\bibitem{" write$
   cite$ write$
   "}" write$
@@ -98,10 +126,15 @@ FUNCTION {fin.entry}
   newline$
 }
 
+% 出力状態を「ブロック後」にする。
 FUNCTION {new.block}
-{ output.state before.all =
-    'skip$
-    { after.block 'output.state := }
+{
+  % output.state が before.all じゃないなら after.block にする。
+  output.state before.all =
+  'skip$
+  {
+    after.block 'output.state :=
+  }
   if$
 }
 
@@ -184,9 +217,9 @@ INTEGERS { nameptr namesleft numnames }
 
 % 著者名一覧を出力する
 FUNCTION {format.names}
-{ 's :=
+{ 's :=  % author フィールドを s に代入する。
   #1 'nameptr :=
-  s num.names$ 'numnames :=  % % 著者数を namesleft に代入する。
+  s num.names$ 'numnames :=  % 著者数を namesleft に代入する。
   numnames 'namesleft :=  % 著者数を namesleft に代入する。こっちはどんどんデクリメントされていく。
 
   % 著者数だけループする。
@@ -301,19 +334,31 @@ FUNCTION {n.dashify}
 }
 
 FUNCTION {format.date}
-{ year empty$
-    { month empty$
-	{ "" }
-	{ "there's a month but no year in " cite$ * warning$
-	  month
-	}
-      if$
+{
+  year empty$
+  {
+    month empty$
+	  {
+      ""
     }
-    { month empty$
-	'year
-	{ month " " * year * }
-      if$
+	  {
+      "there's a month but no year in " cite$ * warning$
+  	  month
+	  }
+    if$
+  }
+  {
+    month empty$
+  	%'year
+    {
+      "(" year * ")" *
     }
+    {
+      %month " " * year *
+      "(" year * "-" * month * ")" *
+    }
+    if$
+  }
   if$
 }
 
@@ -414,23 +459,38 @@ FUNCTION {format.pages}
 }
 
 FUNCTION {format.vol.num.pages}
-{ volume field.or.null
+{
+  % Volume を出力する。
+  "Vol.~" volume * ", " * field.or.null
+
+  % Number を出力する。
   number empty$
-    'skip$
-    { "(" number * ")" * *
-      volume empty$
-	{ "there's a number but no volume in " cite$ * warning$ }
-	'skip$
-      if$
+  'skip$
+  {
+    "No.~" number * ", " * *
+
+    volume empty$
+	  {
+      "there's a number but no volume in " cite$ * warning$
     }
+  	'skip$
+    if$
+  }
   if$
+
+  % Pages を出力する。
   pages empty$
-    'skip$
-    { duplicate$ empty$
-	{ pop$ format.pages }
-	{ ":" * pages n.dashify * }
-      if$
+  'skip$
+  {
+    duplicate$ empty$
+    {
+      pop$ format.pages
     }
+    {
+      "pp.~" * pages n.dashify *
+    }
+    if$
+  }
   if$
 }
 
@@ -574,22 +634,39 @@ FUNCTION {format.incoll.inproc.crossref}
 }
 
 FUNCTION {article}
-{ output.bibitem
+{
+  output.bibitem
+
+  % 著者名一覧を出力する。
   format.authors "author" output.check
+
+  % タイトルを出力する。
   new.block
   format.title "title" output.check
+
   new.block
   crossref missing$
-    { journal emphasize "journal" output.check
-      format.vol.num.pages output
-      format.date "year" output.check
-    }
-    { format.article.crossref output.nonnull
-      format.pages output
-    }
+  {
+    % 雑誌名を出力する。
+    %journal emphasize "journal" output.check
+    journal "journal" output.check
+
+    % Vol. No. pp. を出力する。
+    format.vol.num.pages output
+
+    % 掲載日時を出力する。
+    format.date "year" output.check
+  }
+  {
+    format.article.crossref output.nonnull
+    format.pages output
+  }
   if$
+
+  % note を出力する。
   new.block
   note output
+
   fin.entry
 }
 
