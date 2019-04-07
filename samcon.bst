@@ -243,7 +243,8 @@ FUNCTION {format.authors}
     ""
   }
   {
-    author format.names
+    % 著者リストの最後に ":" を足す。
+    author format.names ":" *
   }
   if$
 }
@@ -268,7 +269,8 @@ FUNCTION {format.title}
     ""
   }
   {
-    title "t" change.case$
+    % 題名を "`` ...''," で囲む。
+    "``" title "t" change.case$ * "''," *
   }
   if$
 }
