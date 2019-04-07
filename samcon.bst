@@ -228,7 +228,7 @@ FUNCTION {format.names}
   }
   {
     % nameptr 番目の著者名を t に代入する。
-    s nameptr "{ff~}{vv~}{ll}{, jj}" format.name$ 't :=
+    s nameptr "{f.~}{vv~}{ll}{, jj}" format.name$ 't :=
 
     % 2人目以降なら ", " を足したりする。
     nameptr #1 >
