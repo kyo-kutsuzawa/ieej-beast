@@ -382,35 +382,59 @@ FUNCTION {either.or.check}
 }
 
 FUNCTION {format.bvolume}
-{ volume empty$
-    { "" }
-    { "volume" volume tie.or.space.connect
-      series empty$
-	'skip$
-	{ " of " * series emphasize * }
-      if$
-      "volume and number" number either.or.check
+{
+  volume empty$
+  {
+    ""
+  }
+  {
+    "Vol.~" volume tie.or.space.connect
+
+    series empty$
+  	'skip$
+	  {
+      " of " * series emphasize *
     }
+    if$
+
+    "volume and number" number either.or.check
+  }
   if$
 }
 
 FUNCTION {format.number.series}
-{ volume empty$
-    { number empty$
-	{ series field.or.null }
-	{ output.state mid.sentence =
-	    { "number" }
-	    { "Number" }
-	  if$
-	  number tie.or.space.connect
-	  series empty$
-	    { "there's a number but no series in " cite$ * warning$ }
-	    { " in " * series * }
-	  if$
-	}
-      if$
+{
+  volume empty$
+  {
+    number empty$
+	  {
+      series field.or.null
     }
-    { "" }
+	  {
+      output.state mid.sentence =
+	    {
+        "No.~"
+      }
+	    {
+        "No.~"
+      }
+	    if$
+
+  	  number tie.or.space.connect
+	    series empty$
+	    {
+        "there's a number but no series in " cite$ * warning$
+      }
+	    {
+        " in " * series *
+      }
+	    if$
+	  }
+    if$
+  }
+  {
+    ""
+  }
   if$
 }
 
@@ -448,13 +472,21 @@ FUNCTION {multi.page.check}
 }
 
 FUNCTION {format.pages}
-{ pages empty$
-    { "" }
-    { pages multi.page.check
-	{ "pages" pages n.dashify tie.or.space.connect }
-	{ "page" pages tie.or.space.connect }
-      if$
+{
+  pages empty$
+  {
+    ""
+  }
+  {
+    pages multi.page.check
+    {
+      "pp.~" pages n.dashify tie.or.space.connect
     }
+    {
+      "p.~" pages tie.or.space.connect
+    }
+    if$
+  }
   if$
 }
 
@@ -514,8 +546,8 @@ FUNCTION {format.in.ed.booktitle}
 { booktitle empty$
     { "" }
     { editor empty$
-	{ "In " booktitle emphasize * }
-	{ "In " format.editors * ", " * booktitle emphasize * }
+	{ booktitle }
+	{ format.editors ", " * booktitle * }
       if$
     }
   if$
