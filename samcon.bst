@@ -52,7 +52,7 @@ FUNCTION {output.nonnull}
   's :=
 
   % output.state = mid.sentence なら ", " を出力する。
-  % output.state = after.block なら ".\n\newblock " を出力する。
+  % output.state = after.block なら " " を出力する。
   % output.state = before.all なら ？？？ を出力する。
   % どれでもなければ ". " を出力する。
 
@@ -64,9 +64,9 @@ FUNCTION {output.nonnull}
     output.state after.block =
 	  {
       %add.period$ write$
-      write$
-	    newline$
-	    "\newblock " write$
+      " " * write$
+	    %newline$
+	    %"\newblock " write$
     }
 	  {
       output.state before.all =
@@ -121,7 +121,8 @@ FUNCTION {output.bibitem}
 }
 
 FUNCTION {fin.entry}
-{ add.period$
+{
+  %add.period$
   write$
   newline$
 }
@@ -303,7 +304,8 @@ FUNCTION {format.title}
   }
   {
     % 題名を "`` ...''," で囲む。
-    "``" title "t" change.case$ * "''," *
+    %"``" title "t" change.case$ * "''," *
+    "``" title * "''," *
   }
   if$
 }
@@ -363,7 +365,9 @@ FUNCTION {format.date}
 }
 
 FUNCTION {format.btitle}
-{ title emphasize
+{
+  %title emphasize
+  title
 }
 
 FUNCTION {tie.or.space.connect}
@@ -388,7 +392,7 @@ FUNCTION {format.bvolume}
     ""
   }
   {
-    "Vol.~" volume tie.or.space.connect
+    "Vol.~" volume *
 
     series empty$
   	'skip$
@@ -420,7 +424,7 @@ FUNCTION {format.number.series}
       }
 	    if$
 
-  	  number tie.or.space.connect
+  	  number *
 	    series empty$
 	    {
         "there's a number but no series in " cite$ * warning$
@@ -480,10 +484,10 @@ FUNCTION {format.pages}
   {
     pages multi.page.check
     {
-      "pp.~" pages n.dashify tie.or.space.connect
+      "pp.~" pages n.dashify *
     }
     {
-      "p.~" pages tie.or.space.connect
+      "p.~" pages *
     }
     if$
   }
@@ -584,17 +588,25 @@ FUNCTION {format.tr.number}
 }
 
 FUNCTION {format.article.crossref}
-{ key empty$
-    { journal empty$
-	{ "need key or journal for " cite$ * " to crossref " * crossref *
-	  warning$
-	  ""
-	}
-	{ "In {\em " journal * "\/}" * }
-      if$
+{
+  key empty$
+  {
+    journal empty$
+	  {
+      "need key or journal for " cite$ * " to crossref " * crossref *
+	    warning$
+	    ""
+	  }
+	  {
+      "In {\em " journal * "\/}" *
     }
-    { "In " key * }
+    if$
+  }
+  {
+    "In " key *
+  }
   if$
+
   " \cite{" * crossref * "}" *
 }
 
@@ -687,6 +699,7 @@ FUNCTION {article}
     format.vol.num.pages output
 
     % 掲載日時を出力する。
+    new.block
     format.date "year" output.check
   }
   {
@@ -703,31 +716,45 @@ FUNCTION {article}
 }
 
 FUNCTION {book}
-{ output.bibitem
+{
+  output.bibitem
+
   author empty$
-    { format.editors "author and editor" output.check }
-    { format.authors output.nonnull
-      crossref missing$
-	{ "author and editor" editor either.or.check }
-	'skip$
-      if$
+  {
+    format.editors "author and editor" output.check
+  }
+  {
+    format.authors output.nonnull
+
+    crossref missing$
+  	{
+      "author and editor" editor either.or.check
     }
+	  'skip$
+    if$
+  }
   if$
+
   new.block
-  format.btitle "title" output.check
+  title "," * "title" output.check
+
   crossref missing$
-    { format.bvolume output
-      new.block
-      format.number.series output
-      new.sentence
-      publisher "publisher" output.check
-      address output
-    }
-    { new.block
-      format.book.crossref output.nonnull
-    }
+  {
+    format.bvolume output
+    new.block
+    format.number.series output
+    new.sentence
+    publisher "publisher" output.check
+    address output
+  }
+  {
+    new.block
+    format.book.crossref output.nonnull
+  }
   if$
+
   format.edition output
+  new.block
   format.date "year" output.check
   new.block
   note output
@@ -809,34 +836,44 @@ FUNCTION {incollection}
 }
 
 FUNCTION {inproceedings}
-{ output.bibitem
+{
+  output.bibitem
   format.authors "author" output.check
   new.block
   format.title "title" output.check
   new.block
+
   crossref missing$
-    { format.in.ed.booktitle "booktitle" output.check
-      format.bvolume output
-      format.number.series output
-      format.pages output
-      address empty$
-	{ organization publisher new.sentence.checkb
-	  organization output
-	  publisher output
-	  format.date "year" output.check
-	}
-	{ address output.nonnull
-	  format.date "year" output.check
-	  new.sentence
-	  organization output
-	  publisher output
-	}
-      if$
+  {
+    format.in.ed.booktitle "booktitle" output.check
+    format.bvolume output
+    format.number.series output
+    format.pages output
+
+    address empty$
+	  {
+      organization publisher new.sentence.checkb
+  	  organization output
+	    publisher output
+      new.block
+	    format.date "year" output.check
+  	}
+    {
+      address output.nonnull
+      new.block
+      format.date "year" output.check
+      new.sentence
+      organization output
+      publisher output
     }
-    { format.incoll.inproc.crossref output.nonnull
-      format.pages output
-    }
+    if$
+  }
+  {
+    format.incoll.inproc.crossref output.nonnull
+    format.pages output
+  }
   if$
+
   new.block
   note output
   fin.entry
