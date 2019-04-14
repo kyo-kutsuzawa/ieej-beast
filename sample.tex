@@ -1,0 +1,134 @@
+\documentclass[english]{ieej-e-samcon}
+%\documentclass[english,letter]{ieej-e}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{listings}
+
+\YEAR{2019}
+\title{BeaST file for IEEJ}
+\authorlist{%
+ \authorentry[someone@example.com]{Taro Tanaka}{s}{author1}
+}
+\affiliate[author1]
+{Anonymous}
+
+\begin{document}
+\begin{abstract}
+A BeaST file according to the IEEJ style is provided.
+Here shows examples of references.
+\end{abstract}
+\begin{keyword}
+  \LaTeX, BibTeX, BeaST, IEEJ
+\end{keyword}
+\maketitle
+
+
+\section*{Citations}
+\Cite{Denki2001,Knuth1994,Yamada2001}
+
+\section{SAMCON}
+Name of the author(s): ``Title'', Name of Publication, Volume, Number, Page (Year and Month of Publication)
+Include all the author's names in full.
+Try to avoid abbreviating the title.
+from \url{http://www2.iee.or.jp/~diic/samcon/}
+
+Place references in the right order according to the IEEJ editing style; e.g.,authors' names, initials, title of article, journal abbreviation,volume number, pages, and publication year.
+Journals areitalicized as \texttt{\textbackslash itshape}, and titles of papers enclosed with `` '' in plain text.
+\footnotesize
+\begin{enumerate}
+  \item D.E. Knuth, The TEXbook, Addison-Wesley (1994)
+  \item R. Seroul \& S. Levy: A Beginner's Book of TEX, Springer-Verlag (1989)
+  \item D. Salomon: The Advanced TEXbook, Springer-Verlag (1995)
+  \item V. Eijkhout: TEX by Topic, Addison-Wesley (1991)
+  \item P.W. Abrahams: TEX for the Impatient, Addison-Wesley (1992)
+  \item S. von Bechtolsheim: TEX in Practice, Springer-Verlag (1993)
+  \item G. Gr\"atzer: Math into TEX–A Simple Introduction to AMS-LATEX, Birkh ̈auser(1993)
+  \item N. Walsh: Making TEX Work, O'Reilly \& Associates (1994)
+  \item L. Lamport, LATEX:  A Document Preparation System, Second Edition, Addison-Wesley (1994)
+  \item M. Goossens, F. Mittelbach \& A. Samarin: The LATEX Companion, Addison-Wesley (1994)
+  \item M. Goossens, S. Rahts, and F. Mittelbach: The LATEX Graphics Companion, Addison-Wesley (1997)
+\end{enumerate}
+\normalsize
+from \url{http://www2.iee.or.jp/~diic/samcon/submission/IEEJ-SAMCON-template.pdf}
+
+
+\section{JIA}
+\begin{comment}
+  \begin{thebibliography}{99}
+    \bibitem{texbook}
+    D.E. Knuth, The \TeX{}book, Addison-Wesley (1994)
+    
+    \bibitem{Seroul}
+    R. Seroul \& S. Levy: 
+    A Beginner's Book of \TeX, Springer-Verlag (1989)
+    
+    \bibitem{Salomon}
+    D. Salomon: 
+    The Advanced \TeX{}book, 
+    Springer-Verlag (1995)
+    
+    \bibitem{Eijkhout}
+    V. Eijkhout: \TeX\ by Topic, Addison-Wesley (1991)
+    
+    \bibitem{PA}
+    P.W. Abrahams: \TeX\ for the Impatient, Addison-Wesley (1992)
+    
+    \bibitem{Bech}
+    S. von Bechtolsheim: \TeX\ in Practice, Springer-Verlag (1993)
+    
+    %\bibitem{Kopka}
+    %H. Kopka \& P.W. Daly: 
+    %A Guide to \LaTeX, Addison-Wesley (1993)
+    
+    \bibitem{Gr}
+    G. Gr\"{a}tzer: Math into \TeX--A Simple Introduction to \AmSLaTeX,
+    Birkh\"{a}user (1993)
+    
+    \bibitem{Walsh}
+    N. Walsh: Making \TeX\ Work, O'Reilly \& Associates (1994)%%\hfil\break
+    %%http://makingtexwork.sourceforge.net/mtw/
+    
+    \bibitem{latexbook}
+    L. Lamport, \LaTeX: A Document Preparation System, Second Edition,  
+    Addison-Wesley (1994) 
+    
+    \bibitem{FMi1}
+    M. Goossens, F. Mittelbach \& A. Samarin: 
+    The \LaTeX\ Companion, Addison-Wesley (1994)
+    
+    \bibitem{FMi2}
+    M. Goossens, S. Rahts, and F. Mittelbach: 
+    The \LaTeX\ Graphics Companion, Addison-Wesley (1997)
+    
+    %\bibitem{FMi3}
+    %M. Goossens, and S. Rahts: 
+    %The \LaTeX\ Web Companion,  
+    %Addison-Wesley (1999)
+    
+    %\bibitem{Lipkin}
+    %B.S. Lipkin: 
+    %\LaTeX\ for Linux, Springer-Verlag New York (1999)
+  \end{thebibliography}
+\end{comment}
+from \url{http://www2.iee.or.jp/ver2/ias/IEEJ-JIA/}
+
+
+\section{電気学会論文誌}
+引用文献の表記は原則として英文とする。ただし，英文表記のない文献を引用する場合は日本語でも差し支えない。 著者名は著者全員を，またタイトルは省略しないで記載してください。 記載内容は，『著者名：「題目」,書名,巻,号,ページ（西暦発行年月）』です。下記をご参照下さい。
+\begin{enumerate}
+  \item 日本語論文などの場合（英語・日本語の併記，(注)ただしタイトルなどに英文表記がない場合は日本語のみとする。\\
+  T. Denki, M. Hanai, and G. Misaki: ``Future Technology for Power System Analysis'', IEEJ Trans.PE, Vol.130, No.1, pp.130-136 (1999-1) (in Japanese)\\
+  電気太郎・花井桃子・岬　五郎：「電力系統解析技術の将来」，電学論B，Vol.130, No.1, pp.130-136(1999-1)
+  \item 国際会議などの論文集の場合\\
+  B. Yamada: ``Experimental studies of new micromechanical vibration systems'', Proc. IEEE Conf. on Micro-mechanical Component, No.21, pp.123-145, Paris, France (1999-4)
+  \item 単行本などの場合（ただし，日本語単行本の表記は上記aの(注)のような取扱いとする。）\\
+  Y. Sankar: Management of Technological Change, p.10, John Wiley, New York (1991)
+\end{enumerate}
+from \url{http://www.iee.jp/wp-content/uploads/honbu/32-doc-kenq/t-tebiki.pdf}
+
+
+\bibliographystyle{samcon}
+\bibliography{references}
+
+
+\end{document}
