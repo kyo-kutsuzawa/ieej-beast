@@ -1,0 +1,35 @@
+%%%
+%% v2.0 [2011/03/15]
+\documentclass[english]{ieej-e}
+\usepackage{graphicx}
+\usepackage[varg]{txfonts}
+\usepackage{hologo}  % used to generate BiBTeX logo
+
+
+\FIELD{D}
+\YEAR{2020}
+\NO{0}
+\title{Example of ieej.bst (unofficial)\\for the Institute of Electrical Engineers of Japan}
+\authorlist{%
+ \authorentry{Kyo Kutsuzawa}{s}{kyo}
+}
+\affiliate[kyo]{ \\ }
+
+\begin{document}
+\begin{abstract}
+
+\end{abstract}
+\begin{keyword}
+  \LaTeX, \hologo{BibTeX}
+\end{keyword}
+\maketitle
+
+
+\section{Citation Examples}
+Journal articles (in Japanese)\cite{Denki2001}, books\cite{Knuth1994}, proceedings papers\cite{Yamada2001}.
+
+
+\bibliographystyle{../../beast/ieej}
+\bibliography{references}
+
+\end{document}

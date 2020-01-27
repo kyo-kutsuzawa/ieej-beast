@@ -1,12 +1,18 @@
-% BibTeX standard bibliography style `samcon,' based on `plain.'
-	% version 0.99a for BibTeX versions 0.99a or later, LaTeX version 2.09.
-	% Copyright (C) 1985, all rights reserved.
-	% Copying of this file is authorized only if either
-	% (1) you make absolutely no changes to your copy, including name, or
-	% (2) if you do make changes, you name it something other than
-	% btxbst.doc, plain.bst, unsrt.bst, alpha.bst, and abbrv.bst.
-	% This restriction helps ensure that all standard styles are identical.
-	% The file btxbst.doc has the documentation for this style.
+% ieej.bst
+% Unofficial BibTeX style for IEEJ conferences/journals, modified from plain.bst.
+%
+% 2020-01-28
+% by Kyo Kutsuzawa
+
+% BibTeX standard bibliography style `plain'
+   % Version 0.99b (8-Dec-10 release) for BibTeX versions 0.99a or later.
+   % Copyright (C) 1984, 1985, 1988, 2010 Howard Trickey and Oren Patashnik.
+   % Unlimited copying and redistribution of this file are permitted as long as
+   % it is unmodified.  Modifications (and redistribution of modified versions)
+   % are also permitted, but only if the resulting file is renamed to something
+   % besides btxbst.doc, plain.bst, unsrt.bst, alpha.bst, and abbrv.bst.
+   % This restriction helps ensure that all standard styles are identical.
+   % The file btxbst.doc has the documentation for this style.
 
 ENTRY
   { address
