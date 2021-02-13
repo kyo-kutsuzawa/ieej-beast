@@ -11,6 +11,6 @@ by Kyo Kutsuzawa
 
 
 ## References
-- http://www.iee.jp/wp-content/uploads/honbu/32-doc-kenq/t-tebiki.pdf
-- http://www2.iee.or.jp/ver2/ias/IEEJ-JIA/
-- http://www2.iee.or.jp/~diic/samcon/submission/IEEJ-SAMCON-template.pdf
+- https://www.iee.jp/en/pub/guideline/detail_eng/#2-4-5
+- https://www.iee.jp/wp-content/uploads/honbu/32-doc-kenq/guideline.pdf
+- http://www2.iee.or.jp/ver2/ias/IEEJ-JIA/author/index.html
