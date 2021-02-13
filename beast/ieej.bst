@@ -265,6 +265,20 @@ FUNCTION {emphasize}
 }
 
 
+FUNCTION {itshape}
+{
+  duplicate$ empty$
+  {
+    pop$
+    ""
+  }
+  {
+    "{\itshape " swap$ * "}" *
+  }
+  if$
+}
+
+
 INTEGERS { nameptr namesleft numnames }
 
 
@@ -330,8 +344,8 @@ FUNCTION {format.authors}
     ""
   }
   {
-    % 著者リストの最後に ":" を足す。
-    author format.names ":" *
+    % 著者リストの最後に " :" を足す。
+    author format.names "~:" *
   }
   if$
 }
@@ -407,16 +421,7 @@ FUNCTION {format.date}
     if$
   }
   {
-    month empty$
-  	%'year
-    {
-      "(" year * ")" *
-    }
-    {
-      %month " " * year *
-      "(" year * "-" * month * ")" *
-    }
-    if$
+    "(" year * ")" *
   }
   if$
 }
@@ -462,7 +467,7 @@ FUNCTION {format.bvolume}
     ""
   }
   {
-    "Vol.~" volume *
+    "Vol." volume *
 
     series empty$
   	'skip$
@@ -488,10 +493,10 @@ FUNCTION {format.number.series}
 	  {
       output.state mid.sentence =
 	    {
-        "No.~"
+        "No."
       }
 	    {
-        "No.~"
+        "No."
       }
 	    if$
 
@@ -576,10 +581,10 @@ FUNCTION {format.pages}
   {
     pages multi.page.check
     {
-      "pp.~" pages n.dashify *
+      "pp." pages n.dashify *
     }
     {
-      "p.~" pages *
+      "p." pages *
     }
     if$
   }
@@ -590,13 +595,13 @@ FUNCTION {format.pages}
 FUNCTION {format.vol.num.pages}
 {
   % Volume を出力する。
-  "Vol.~" volume * ", " * field.or.null
+  "Vol." volume * ", " * field.or.null
 
   % Number を出力する。
   number empty$
   'skip$
   {
-    "No.~" number * ", " * *
+    "No." number * ", " * *
 
     volume empty$
 	  {
@@ -616,7 +621,7 @@ FUNCTION {format.vol.num.pages}
       pop$ format.pages
     }
     {
-      "pp.~" * pages n.dashify *
+      "pp." * pages n.dashify *
     }
     if$
   }
@@ -861,7 +866,7 @@ FUNCTION {article}
   {
     % 雑誌名を出力する。
     %journal emphasize "journal" output.check
-    journal "journal" output.check
+    journal itshape "journal" output.check
 
     % Vol. No. pp. を出力する。
     format.vol.num.pages output
@@ -875,10 +880,6 @@ FUNCTION {article}
     format.pages output
   }
   if$
-
-  % note を出力する。
-  new.block
-  note output
 
   fin.entry
 }
@@ -1033,7 +1034,7 @@ FUNCTION {inproceedings}
 
   crossref missing$
   {
-    format.in.ed.booktitle "booktitle" output.check
+    format.in.ed.booktitle itshape "booktitle" output.check
     format.bvolume output
     format.number.series output
     format.pages output
