@@ -3,17 +3,18 @@
 \documentclass[english]{ieej-e}
 \usepackage{graphicx}
 \usepackage[varg]{txfonts}
+\usepackage[hyphens]{url}
 \usepackage{hologo}  % used to generate BiBTeX logo
 
 
-\FIELD{D}
-\YEAR{2020}
+\FIELD{X}
+\YEAR{0}
 \NO{0}
 \title{Example of ieej.bst (unofficial)\\for the Institute of Electrical Engineers of Japan}
 \authorlist{%
  \authorentry{Kyo Kutsuzawa}{m}{kyo}
 }
-\affiliate[kyo]{ \\ }
+\affiliate[kyo]{e-mail: \texttt{kutsuzawa@tohoku.ac.jp}}
 
 \begin{document}
 \begin{abstract}
@@ -26,7 +27,35 @@
 
 
 \section{Citation Examples}
-Journal articles (in Japanese)\cite{Denki2001}, books\cite{Knuth1994}, proceedings papers\cite{Yamada2001}.
+Journal articles\cite{Edner1987,Denki2001}, books\cite{Knuth1994}, proceedings papers\cite{Yamada2001}.
+
+
+\section{Details}
+The Institute of Electrical Engineers of Japan (IEEJ) provides author's guidelines\footnote{\url{https://www.iee.jp/en/pub/guideline/detail_eng/#2-4-5}}, in which the reference style is described as follows:
+\begin{quotation}
+  (5) Reference should be stated in the following manner.\\
+  Name of the author(s): “Title”, Name of Publication, Volume, Number, Page (Year of Publication) Include all the author’s names in full. Try to avoid abbreviating the title.
+\end{quotation}
+
+The pdf version of the author's guidelines\footnote{\url{https://www.iee.jp/wp-content/uploads/honbu/32-doc-kenq/guideline.pdf}} provides detailed examples:
+\begin{quotation}
+  \footnotesize H. Edner, K. Fredriksson, A. Sunesson, S. Svanberg, L. Unéus, and W. Wendt : ``Mobile remote sensing system for atmospheric monitoring'', {\itshape Appl. Opt.}, Vol.26, pp.4330-4335 (1987)
+\end{quotation}
+\begin{quotation}
+  \footnotesize N. Goto : “SO${}_2$ measurement by laser radar'', Denki University Research Report No.95085 (1995)
+\end{quotation}
+
+According to these examples, the style manners are as follows:
+\begin{itemize}
+  \item Author's first names are abbriviated like ``T. Denki.''
+  \item A colon is placed between the author's names and paper title. Single spaces are also placed both before and after the colon.
+  \item A comma is placed after the double quotation.
+  \item Publication names are italicized.
+  \item There are no spaces between periods and numbers in vol., no., and pp.
+  \item There is no period at the end of each reference.
+\end{itemize}
+
+For italicization of the publication names, ieej.bst used \texttt{\\itshape} according to the template file of IEEJ Journal of Industry Applications\footnote{\url{http://www2.iee.or.jp/ver2/ias/IEEJ-JIA/author/index.html}}
 
 
 \bibliographystyle{../beast/ieej}
